@@ -13,9 +13,9 @@ defaultCallback = (err) ->
 
 class SessionStore extends require('connect').session.Store
     constructor: (options) ->
-        options?.expires ?= 60000
+        options?.interval ?= 60000
         mongoose.connect options.url
-        setInterval (-> Session.remove { expires: { '$lte': new Date() }}, defaultCallback), options.expires
+        setInterval (-> Session.remove { expires: { '$lte': new Date() }}, defaultCallback), options.interval
         
     get: (sid, cb = defaultCallback) ->
         Session.findOne { sid: sid }, (err, session) ->

@@ -32,10 +32,10 @@
     function SessionStore(options) {
       var _ref;
       if (options != null) {
-                if ((_ref = options.expires) != null) {
+                if ((_ref = options.interval) != null) {
           _ref;
         } else {
-          options.expires = 60000;
+          options.interval = 60000;
         };
       }
       mongoose.connect(options.url);
@@ -45,7 +45,7 @@
             '$lte': new Date()
           }
         }, defaultCallback);
-      }), options.expires);
+      }), options.interval);
     }
     SessionStore.prototype.get = function(sid, cb) {
       if (cb == null) {

@@ -10,25 +10,23 @@ Uses [mongeese](https://github/donpark/mongeese) module to isolate session datab
 
 ## Usage
 
-Replace code requiring `mongoose` module like this:
+Create session store:
 
-    var mongoose = require("mongoose");
-    mongoose.connect(...);
-    
-with:
+    var SessionMongoose = require("session-mongoose");
+    var mongooseSessionStore = new SessionMongoose({
+        url: "mongodb://localhost/session",
+        interval: 120000 // expiration check worker run interval in millisec (default: 60000)
+    });
 
-    var mongoose = require("mongeese").create();
-    mongoose.connect(...);
-    
-Result of `create` method call should look and behave exactly like `mongoose` module
-except each result can have its own *default connection*.
-    
-If you need to handle multiple databases at the same time, following should suffice:
+Configure Express
 
-    var logdb = require("mongeese").create();
-    var keydb = require("mongeese").create();
-    
-    logdb.connect('mongodb://localhost/log');
-    keydb.connect('mongodb://localhost/key');
-    
+    var express = require("express");
+    ...
+    // configure session provider
+    app.use(express.session({
+        store: mongooseSessionStore,
+        ...
+    });
+    ...
+
 That's it.
