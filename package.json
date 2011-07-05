@@ -1,0 +1,19 @@
+{
+  "author": "Don Park <donpark@docuverse.com> (http://blog.docuverse.com)",
+  "name": "session-mongoose",
+  "description": "connect session store implementation using Mongoose",
+  "version": "0.0.1",
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/donpark/session-mongoose.git"
+  },
+  "engines": {
+    "node": ">= v0.4.0"
+  },
+  "dependencies": {
+    "connect": ">= 1.0.0",
+    "mongeese": ">= 0.0.1"
+  },
+  "devDependencies": {}
+}
