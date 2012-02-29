@@ -12,7 +12,7 @@
     "node": ">= v0.4.0"
   },
   "dependencies": {
-    "connect": ">= 1.0.0",
+    "connect": ">= 1.0.0 < 2",
     "mongeese": ">= 0.0.1"
   },
   "devDependencies": {}
