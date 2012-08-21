@@ -40,7 +40,7 @@
       }, function(err, session) {
         if (session != null) {
           try {
-            return cb(null, session.data);
+            return cb(null, ((typeof session.data === 'string') ? JSON.parse(session.data) : session.data));
           } catch (err) {
             return cb(err);
           }
