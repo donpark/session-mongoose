@@ -8,19 +8,9 @@
   Schema = mongoose.Schema;
 
   SessionSchema = new Schema({
-    sid: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    data: {
-      type: String,
-      "default": '{}'
-    },
-    expires: {
-      type: Date,
-      index: true
-    }
+    sid: {type: String, required: true, unique: true},
+    data: {},
+    expires: {type: Date, index: true}
   });
 
   Session = mongoose.model('Session', SessionSchema);
@@ -50,7 +40,7 @@
       }, function(err, session) {
         if (session != null) {
           try {
-            return cb(null, JSON.parse(session.data));
+            return cb(null, ((typeof session.data === 'string') ? JSON.parse(session.data) : session.data));
           } catch (err) {
             return cb(err);
           }
@@ -68,7 +58,7 @@
           sid: sid
         }, {
           sid: sid,
-          data: JSON.stringify(data),
+          data: data,
           expires: (data != null ? (_ref = data.cookie) != null ? _ref.expires : void 0 : void 0) != null ? data.cookie.expires : null
         }, {
           upsert: true
