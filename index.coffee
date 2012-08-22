@@ -21,6 +21,7 @@ class SessionStore extends require('connect').session.Store
         Session.findOne { sid: sid }, (err, session) ->
             if session?
                 try
+                    session.data = JSON.parse(session.data) if typeof session.data is 'string'
                     cb null, session.data
                 catch err
                     cb err
