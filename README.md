@@ -30,3 +30,9 @@ Configure Express
     ...
 
 That's it.
+
+## Version 0.0.3 Migration Note
+
+Version 0.0.3 changes Mongoose schema data type for session data from JSON string to `Mixed`.
+
+If you notice any migration issues, please file an issue.
