@@ -2,7 +2,7 @@
 
 ## Implementation Note:
 
-Uses [mongeese](https://github.com/donpark/mongeese) module to isolate session database from app's default Mongoose database.
+Uses its own instance of Mongoose object, leaving default instance for use by the app.
 
 ## Install
 
