@@ -1,4 +1,7 @@
-mongoose = require('mongeese').create() # isolated Mongoose instance
+Mongoose = require('mongoose')
+mongoose = new Mongoose.Mongoose()
+mongoose[key] = value for own key, value of Mongoose when value isnt null
+
 Schema = mongoose.Schema
 
 SessionSchema = new Schema({
