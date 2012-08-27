@@ -11,7 +11,7 @@
   for (key in Mongoose) {
     if (!__hasProp.call(Mongoose, key)) continue;
     value = Mongoose[key];
-    if (value !== null) {
+    if (typeof mongoose[key] === 'undefined') {
       mongoose[key] = value;
     }
   }
