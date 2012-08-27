@@ -1,6 +1,6 @@
 Mongoose = require('mongoose')
 mongoose = new Mongoose.Mongoose()
-mongoose[key] = value for own key, value of Mongoose when typeof mongoose[key] is 'undefined'
+mongoose[key] = value for key, value of Mongoose when not mongoose[key]? and Mongoose.hasOwnProperty(key)
 
 Schema = mongoose.Schema
 

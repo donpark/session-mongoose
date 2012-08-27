@@ -9,9 +9,8 @@
   mongoose = new Mongoose.Mongoose();
 
   for (key in Mongoose) {
-    if (!__hasProp.call(Mongoose, key)) continue;
     value = Mongoose[key];
-    if (typeof mongoose[key] === 'undefined') {
+    if (!(mongoose[key] != null) && Mongoose.hasOwnProperty(key)) {
       mongoose[key] = value;
     }
   }
