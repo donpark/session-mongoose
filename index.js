@@ -152,4 +152,6 @@
 
   module.exports = SessionStore;
 
+  module.exports.Session = Session;
+
 }).call(this);

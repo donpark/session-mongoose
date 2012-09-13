@@ -58,3 +58,4 @@ class SessionStore extends require('connect').session.Store
         Session.count {}, cb
 
 module.exports = SessionStore
+module.exports.Session = Session
