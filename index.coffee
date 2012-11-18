@@ -5,9 +5,9 @@ mongoose[key] = value for key, value of Mongoose when not mongoose[key]? and Mon
 Schema = mongoose.Schema
 
 SessionSchema = new Schema({
-    sid: { type: String, required: true, unique: true }
-    data: {}
-    expires: { type: Date, index: true }
+  sid: { type: String, required: true, unique: true }
+  data: { type: Schema.Types.Mixed, required: true }
+  expires: { type: Date, index: true }
 })
 
 Session = mongoose.model('Session', SessionSchema)
@@ -15,47 +15,62 @@ Session = mongoose.model('Session', SessionSchema)
 defaultCallback = (err) ->
 
 class SessionStore extends require('connect').session.Store
-    constructor: (options) ->
-        options?.interval ?= 60000
-        mongoose.connect options.url
-        setInterval (-> Session.remove { expires: { '$lte': new Date() }}, defaultCallback), options.interval
+  constructor: (@options = {}) ->
+    @options.url ?= "mongodb://localhost/sessions"
+    @options.interval ?= 60000
+    mongoose.connect @options.url
+    setInterval ->
+      Session.remove
+        expires:
+          '$lte': new Date()
+      , defaultCallback
+    , @options.interval
 
-    get: (sid, cb = defaultCallback) ->
-        Session.findOne { sid: sid }, (err, session) ->
-            if session?
-                try
-                    session.data = JSON.parse(session.data) if typeof session.data is 'string'
-                    cb null, session.data
-                catch err
-                    cb err
-            else
-                cb err, session
-
-    set: (sid, data, cb = defaultCallback) ->
+  get: (sid, cb = defaultCallback) ->
+    Session.findOne { sid: sid }, (err, session) ->
+      if err or not session
+        cb err
+      else
+        data = session.data
         try
-            Session.update { sid: sid }, {
-                sid: sid
-                data: data
-                expires: if data?.cookie?.expires? then data.cookie.expires else null
-            }, { upsert: true }, cb
+          data = JSON.parse data if typeof data is 'string'
+          cb null, data
         catch err
-            cb err
+          cb err
 
-    destroy: (sid, cb = defaultCallback) ->
-        Session.remove { sid: sid }, cb
+  set: (sid, data, cb = defaultCallback) ->
+    if not data
+      @destroy sid, cb
+    else
+      try
+        expires = data.cookie.expires if data.cookie
+        expires ?= null # undefined is not equivalent to null in Mongoose 3.x
+        session =
+          sid: sid
+          data: data
+          expires: expires
+        Session.update { sid: sid }, session, { upsert: true }, cb
+      catch err
+        cb err
 
-    all: (cb = defaultCallback) ->
-        Session.find { expires: { '$gte': new Date() } }, [ 'sid' ], (err, sessions) ->
-            if sessions?
-                cb null, (session.sid for session in sessions)
-            else
-                cb err
+  destroy: (sid, cb = defaultCallback) ->
+    Session.remove { sid: sid }, cb
 
-    clear: (cb = defaultCallback) ->
-        Session.drop cb
+  all: (cb = defaultCallback) ->
+    Session.find {}, 'sid expires', (err, sessions) ->
+      if err or not sessions
+        cb err
+      else
+        now = Date.now()
+        sessions = sessions.filter (session) ->
+          true if not session.expires or session.expires.getTime() > now
+        cb null, (session.sid for session in sessions)
 
-    length: (cb = defaultCallback) ->
-        Session.count {}, cb
+  clear: (cb = defaultCallback) ->
+    Session.collection.drop cb
+
+  length: (cb = defaultCallback) ->
+    Session.count {}, cb
 
 module.exports = SessionStore
 module.exports.Session = Session
