@@ -18,13 +18,14 @@ class SessionStore extends require('connect').session.Store
   constructor: (@options = {}) ->
     @options.url ?= "mongodb://localhost/sessions"
     @options.interval ?= 60000
-    mongoose.connect @options.url
-    setInterval ->
-      Session.remove
-        expires:
-          '$lte': new Date()
-      , defaultCallback
-    , @options.interval
+    if mongoose.connection.readyState is 0
+      mongoose.connect @options.url
+      setInterval ->
+        Session.remove
+          expires:
+            '$lte': new Date()
+        , defaultCallback
+      , @options.interval
 
   get: (sid, cb = defaultCallback) ->
     Session.findOne { sid: sid }, (err, session) ->

@@ -50,14 +50,16 @@
       if ((_ref1 = (_base1 = this.options).interval) == null) {
         _base1.interval = 60000;
       }
-      mongoose.connect(this.options.url);
-      setInterval(function() {
-        return Session.remove({
-          expires: {
-            '$lte': new Date()
-          }
-        }, defaultCallback);
-      }, this.options.interval);
+      if (mongoose.connection.readyState === 0) {
+        mongoose.connect(this.options.url);
+        setInterval(function() {
+          return Session.remove({
+            expires: {
+              '$lte': new Date()
+            }
+          }, defaultCallback);
+        }, this.options.interval);
+      }
     }
 
     SessionStore.prototype.get = function(sid, cb) {

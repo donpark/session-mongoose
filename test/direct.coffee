@@ -1,9 +1,8 @@
-
-describe "session-mongoose", ->
+describe "session-mongoose direct", ->
   assert = require('assert')
   should = require('should')
-  connect = require('connect')
   SessionStore = require('..')
+  store = undefined
 
   store = new SessionStore
     url: "mongodb://localhost/session-mongoose-test"
@@ -139,3 +138,32 @@ describe "session-mongoose", ->
           reset()
           done()
       , 1200
+
+  it "should support complex session data", (done) ->
+    should.exist store
+
+    expected = 
+      cookie:
+        maxAge: 2000 # seconds
+      name: 'don'
+      value: '456'
+      array: [
+        "123"
+        "456"
+        {
+          test: "789"
+          nested: 123
+          object: true
+        }
+      ]
+
+    reset()
+    store.set '123', expected, (err, ok) ->
+      assert.ifError err
+      assert.equal ok, 1, "SessionStore.set should return 1"
+
+      store.get '123', (err, data) ->
+        assert.ifError err
+        assert.deepEqual data, expected
+        reset()
+        done()
