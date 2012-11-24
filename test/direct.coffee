@@ -1,7 +1,7 @@
 describe "session-mongoose direct", ->
   assert = require('assert')
   should = require('should')
-  SessionStore = require('..')
+  SessionStore = require('..')(require('connect'))
   store = undefined
 
   store = new SessionStore

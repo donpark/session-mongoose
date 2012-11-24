@@ -3,7 +3,7 @@ describe "session-mongoose express", ->
   express = require('express')
   request = require('supertest')
 
-  SessionStore = require('..')
+  SessionStore = require('..')(express)
 
   makeExpress = ->
     app = express()
