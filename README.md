@@ -44,16 +44,16 @@ That's it.
 
 * moved Mongoose model for session data to session store instance (SessionStore.model).
 
-    var connect = require('connect');
-    var SessionStore = require("session-mongoose")(connect);
-    var store = new SessionStore({
-        url: "mongodb://localhost/session",
-        interval: 120000 // expiration check worker run interval in millisec (default: 60000)
-    });
-    var model = store.model; // Mongoose model for session
+        var connect = require('connect');
+        var SessionStore = require("session-mongoose")(connect);
+        var store = new SessionStore({
+            url: "mongodb://localhost/session",
+            interval: 120000 // expiration check worker run interval in millisec (default: 60000)
+        });
+        var model = store.model; // Mongoose model for session
 
-    // this wipes all sessions
-    model.collection.drop (err) -> console.log(err)
+        // this wipes all sessions
+        model.collection.drop (err) -> console.log(err)
 
 ## Version 0.1 Migration Note
 
