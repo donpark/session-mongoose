@@ -53,7 +53,7 @@ That's it.
         var model = store.model; // Mongoose model for session
 
         // this wipes all sessions
-        model.collection.drop (err) -> console.log(err)
+        model.collection.drop(function (err) { console.log(err); });
 
 ## Version 0.1 Migration Note
 
