@@ -5,8 +5,6 @@ describe "session-mongoose express", ->
 
   SessionStore = require('..')
 
-  express.session.Store = SessionStore
-
   makeExpress = ->
     app = express()
     app.use express.bodyParser()
