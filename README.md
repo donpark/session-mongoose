@@ -1,5 +1,23 @@
 `session-mongoose` module is an implementation of `connect` session store using [Mongoose](http://mongoosejs.com).
 
+## Status ##
+
+I believe every open source project should clearly indicate its status and intended applications
+of the project. In that spirit, here is the status of `session-mongoose`.
+
+This project is IMO not production-ready for following reasons:
+
+1. insufficient testing
+2. zero optimization
+3. there are better options than MongoDB for session storage.
+
+I use `session-mongoose` primarily in prototype webapps where above factors don't matter.
+
+Accordingly, I am ready to commit just enough time to fix things when things break.
+I can't guarantee all reported issues will be fixed in reasonable amount of time but
+I do try to address them promptly mainly because I can't sleep at night when someone
+in need is out there.
+
 ## Implementation Note:
 
 Uses its own instance of Mongoose object, leaving default instance for use by the app.
