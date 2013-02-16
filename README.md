@@ -49,7 +49,7 @@ Configure Express
     // configure session provider
     app.use(express.session({
         store: store,
-        ...
+        cookie: { maxAge: 900000 } // expire session in 15 min or 900 seconds
     });
     ...
 
