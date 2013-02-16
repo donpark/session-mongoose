@@ -14,6 +14,8 @@ describe "session-mongoose express", ->
       store: new SessionStore
         url: "mongodb://localhost/session-mongoose-test"
         interval: 1000
+      cookie:
+        maxAge: 5000
     app.use app.router
     app
 
