@@ -91,7 +91,7 @@
       };
 
       SessionStore.prototype.set = function(sid, data, cb) {
-        var expires, session;
+        var cookie, expires, session;
         if (cb == null) {
           cb = defaultCallback;
         }
@@ -99,8 +99,12 @@
           return this.destroy(sid, cb);
         } else {
           try {
-            if (data.cookie) {
-              expires = data.cookie.expires;
+            if (cookie = data.cookie) {
+              if (cookie.expires) {
+                expires = cookie.expires;
+              } else if (cookie.maxAge) {
+                expires = new Date(Date.now() + cookie.maxAge);
+              }
             }
             if (expires == null) {
               expires = null;

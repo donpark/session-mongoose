@@ -46,7 +46,11 @@ module.exports = (connect) ->
         @destroy sid, cb
       else
         try
-          expires = data.cookie.expires if data.cookie
+          if cookie = data.cookie
+            if cookie.expires
+              expires = cookie.expires
+            else if cookie.maxAge
+              expires = new Date(Date.now() + cookie.maxAge)
           expires ?= null # undefined is not equivalent to null in Mongoose 3.x
           session =
             sid: sid
