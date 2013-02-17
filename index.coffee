@@ -21,10 +21,7 @@ module.exports = (connect) ->
       @options.interval ?= 60000
       @model = SessionModel
       if mongoose.connection.readyState is 0
-        if typeof @options.callback is 'function'
-          mongoose.connect @options.url, @options.callback
-        else
-          mongoose.connect @options.url
+        mongoose.connect @options.url
         setInterval =>
           @model.remove
             expires:
