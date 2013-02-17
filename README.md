@@ -53,6 +53,18 @@ Configure Express
     });
     ...
 
+Using custom connection
+
+    var mongoose = require("mongoose");
+    mongoose.connect("mongodb://localhost/mysessionstore");
+    
+    var SessionStore = require("session-mongoose")(express);
+    var store = new SessionStore({
+        url: "mongodb://localhost/session",
+        interval: 120000, // expiration check worker run interval in millisec (default: 60000)
+        connection: mongoose.connection // <== custom connection
+    });
+
 That's it.
 
 ## Version 0.2 Migration Note
