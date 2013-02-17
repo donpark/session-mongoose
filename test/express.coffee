@@ -12,7 +12,7 @@ describe "session-mongoose express", ->
     app.use express.cookieParser('1234')
     app.use express.session
       store: new SessionStore
-        url: "mongodb://localhost/session-mongoose-test"
+        url: "mongodb://localhost/session-mongoose-test" if not connection
         interval: 1000
         connection: connection
       cookie:
