@@ -55,7 +55,11 @@
         }
         this.model = SessionModel;
         if (mongoose.connection.readyState === 0) {
-          mongoose.connect(this.options.url);
+          if (typeof this.options.callback === 'function') {
+            mongoose.connect(this.options.url, this.options.callback);
+          } else {
+            mongoose.connect(this.options.url);
+          }
           setInterval(function() {
             return _this.model.remove({
               expires: {
