@@ -30,12 +30,13 @@ module.exports = (connect) ->
         @model = connection.model('Session')
       catch err
         @model = connection.model('Session', SessionSchema)
-        setInterval =>
-          @model.remove
-            expires:
-              '$lte': new Date()
-          , defaultCallback
-        , @options.interval
+      
+      setInterval =>
+        @model.remove
+          expires:
+            '$lte': new Date()
+        , defaultCallback
+      , @options.interval
 
     get: (sid, cb = defaultCallback) ->
       @model.findOne { sid: sid }, (err, session) ->

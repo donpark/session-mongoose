@@ -64,14 +64,14 @@
           this.model = connection.model('Session');
         } catch (err) {
           this.model = connection.model('Session', SessionSchema);
-          setInterval(function() {
-            return _this.model.remove({
-              expires: {
-                '$lte': new Date()
-              }
-            }, defaultCallback);
-          }, this.options.interval);
         }
+        setInterval(function() {
+          return _this.model.remove({
+            expires: {
+              '$lte': new Date()
+            }
+          }, defaultCallback);
+        }, this.options.interval);
       }
 
       SessionStore.prototype.get = function(sid, cb) {
