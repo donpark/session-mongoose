@@ -10,8 +10,6 @@ SessionSchema = new Schema({
   expires: { type: Date, index: true }
 })
 
-SessionModel = mongoose.model('Session', SessionSchema)
-
 defaultCallback = (err) ->
 
 module.exports = (connect) ->
@@ -19,9 +17,19 @@ module.exports = (connect) ->
     constructor: (@options = {}) ->
       @options.url ?= "mongodb://localhost/sessions"
       @options.interval ?= 60000
-      @model = SessionModel
-      if mongoose.connection.readyState is 0
-        mongoose.connect @options.url
+      
+      if @options.connection
+        connection = @options.connection
+      else
+        if mongoose.connection.readyState is 0
+          connection = mongoose.connect @options.url
+        else
+          connection = mongoose.connection
+
+      try
+        @model = connection.model('Session')
+      catch err
+        @model = connection.model('Session', SessionSchema)
         setInterval =>
           @model.remove
             expires:
