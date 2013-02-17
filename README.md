@@ -60,7 +60,6 @@ Using custom connection
     
     var SessionStore = require("session-mongoose")(express);
     var store = new SessionStore({
-        url: "mongodb://localhost/session",
         interval: 120000, // expiration check worker run interval in millisec (default: 60000)
         connection: mongoose.connection // <== custom connection
     });
