@@ -33,6 +33,11 @@
     }
   });
 
+  SessionSchema.index({
+    sid: 1,
+    expires: 1
+  });
+
   defaultCallback = function(err) {};
 
   module.exports = function(connect) {
@@ -86,7 +91,10 @@
           cb = defaultCallback;
         }
         return this.model.findOne({
-          sid: sid
+          sid: sid,
+          expires: {
+            '$gte': new Date()
+          }
         }, function(err, session) {
           var data;
 
