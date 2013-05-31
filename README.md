@@ -66,6 +66,17 @@ Using custom connection
 
 That's it.
 
+## Turning off the sweeper that expires sessions
+
+You can also turn of the sweeper that runs every 'interval' seconds by
+setting the sweeper option to false. It is true by default.
+
+    var SessionStore = require("session-mongoose")(express);
+    var store = new SessionStore({
+        sweeper: false,
+        connection: mongoose.connection // <== custom connection
+    });
+
 ## Version 0.2 Migration Note
 
 * an instance of `connect` module (or equivalent like `express`) is now **required** to get

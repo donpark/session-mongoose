@@ -17,6 +17,7 @@ module.exports = (connect) ->
     constructor: (@options = {}) ->
       @options.url ?= "mongodb://localhost/sessions"
       @options.interval ?= 60000
+      @options.sweeper ?= true
       
       if @options.connection
         connection = @options.connection
@@ -31,12 +32,13 @@ module.exports = (connect) ->
       catch err
         @model = connection.model('Session', SessionSchema)
       
-      setInterval =>
-        @model.remove
-          expires:
-            '$lte': new Date()
-        , defaultCallback
-      , @options.interval
+      if @options.sweeper is true
+        setInterval =>
+          @model.remove
+            expires:
+              '$lte': new Date()
+          , defaultCallback
+        , @options.interval
 
     get: (sid, cb = defaultCallback) ->
       @model.findOne { sid: sid }, (err, session) ->
