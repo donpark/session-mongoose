@@ -9,6 +9,7 @@ SessionSchema = new Schema({
   data: { type: Schema.Types.Mixed, required: true }
   expires: { type: Date, index: true }
 })
+SessionSchema.index({sid: 1, expires: 1});
 
 defaultCallback = (err) ->
 
@@ -17,7 +18,8 @@ module.exports = (connect) ->
     constructor: (@options = {}) ->
       @options.url ?= "mongodb://localhost/sessions"
       @options.interval ?= 60000
-      
+      @options.sweeper ?= true
+
       if @options.connection
         connection = @options.connection
       else
@@ -30,16 +32,17 @@ module.exports = (connect) ->
         @model = connection.model('Session')
       catch err
         @model = connection.model('Session', SessionSchema)
-      
-      setInterval =>
-        @model.remove
-          expires:
-            '$lte': new Date()
-        , defaultCallback
-      , @options.interval
+
+      if @options.sweeper is true
+        setInterval =>
+          @model.remove
+            expires:
+              '$lte': new Date()
+          , defaultCallback
+        , @options.interval
 
     get: (sid, cb = defaultCallback) ->
-      @model.findOne { sid: sid }, (err, session) ->
+      @model.findOne { sid: sid, expires: {'$gte': new Date()} }, (err, session) ->
         if err or not session
           cb err
         else
