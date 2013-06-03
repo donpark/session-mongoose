@@ -66,6 +66,21 @@ describe "session-mongoose direct", ->
         assert.equal data, null
         done()
 
+  it "get should not return expired session", (done) ->
+    reset()
+    store.set '123',
+      cookie:
+        expires: new Date(Date.now() - 1000)
+      name: 'don'
+      value: '456'
+    , (err, ok) ->
+      assert.ifError err
+      assert.equal ok, 1, "SessionStore.set should return 1"
+      store.get '123', (err, data) ->
+        assert.ifError err
+        assert.equal data, null
+        done()
+
   it "all should return 1 sid after one is set", (done) ->
     reset()
     store.set '123',
