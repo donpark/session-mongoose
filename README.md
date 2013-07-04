@@ -77,7 +77,19 @@ setting the sweeper option to false. It is true by default.
         connection: mongoose.connection // <== custom connection
     });
 
-## Version 0.2 Migration Note
+## Also See
+
+### Similar Projects
+
+* [connect-mongostore](https://github.com/diversario/connect-mongostore/) - replica set support
+
+### Related Projects
+
+TBD
+
+## Migration Notes
+
+### Version 0.2 Migration Note
 
 * an instance of `connect` module (or equivalent like `express`) is now **required** to get
   SessionStore implementation (see examples above).
@@ -95,11 +107,11 @@ setting the sweeper option to false. It is true by default.
         // this wipes all sessions
         model.collection.drop(function (err) { console.log(err); });
 
-## Version 0.1 Migration Note
+### Version 0.1 Migration Note
 
 * `connect` moved from `dependencies` to `devDependencies`.
 
-## Version 0.0.3 Migration Note
+### Version 0.0.3 Migration Note
 
 Version 0.0.3 changes Mongoose schema data type for session data from JSON string to `Mixed`.
 
