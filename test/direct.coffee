@@ -150,6 +150,7 @@ describe "session-mongoose direct", ->
       setTimeout ->
         store.length (err, length) ->
           assert.equal length, 0
+          assert.notEqual store.sweeps, 0
           reset()
           done()
       , 1200

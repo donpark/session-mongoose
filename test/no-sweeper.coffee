@@ -7,25 +7,23 @@ describe "session-mongoose sweeper off", ->
   store = new SessionStore
     url: "mongodb://localhost/session-mongoose-test-no-sweeper"
     sweeper: false
-    interval: 1000 # ms
+    interval: 100 # ms
 
   reset = ->
     store.clear()
 
   it "should NOT remove expired session within sweeper interval", (done) ->
     reset()
-    store.set '123',
+    store.set '321',
       cookie:
-        expires: new Date(Date.now() - 1000)
+        expires: new Date(Date.now() + 10)
       name: 'don'
       value: '456'
     , (err, ok) ->
-      assert.ifError err
-      assert.equal ok, 1, "SessionStore.set should return 1"
+      assert.ifError err, "SessionStore.set should not return error"
+      assert.equal ok, true, "SessionStore.set should return ok"
       setTimeout ->
-        store.length (err, length) ->
-          console.log 'LENGTH' + length
-          assert.equal length, 1, "Session should not have been swept"
-          reset()
-          done()
-      , 1200
+        assert.equal store.sweeps, 0, "sweep count shouldn't change"
+        # reset()
+        done()
+      , 3000
