@@ -2,7 +2,7 @@
   "author": "Don Park <donpark@docuverse.com> (http://blog.docuverse.com)",
   "name": "session-mongoose",
   "description": "connect session store implementation using Mongoose",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "main": "./index.js",
   "repository": {
     "type": "git",
@@ -12,9 +12,10 @@
     "node": ">= v0.8.0"
   },
   "scripts": {
+    "prepublish": "coffee -c *.coffee",
     "test": "mocha"
   },
-  "dependencies": {
+  "peerDependencies": {
     "mongoose": ">= 3.0"
   },
   "devDependencies": {
