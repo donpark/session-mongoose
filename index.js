@@ -58,6 +58,7 @@
         if ((_base2 = this.options).sweeper == null) {
           _base2.sweeper = true;
         }
+        this.sweeps = 0;
         if (this.options.connection) {
           connection = this.options.connection;
         } else {
@@ -75,6 +76,7 @@
         }
         if (this.options.sweeper === true) {
           setInterval(function() {
+            _this.sweeps++;
             return _this.model.remove({
               expires: {
                 '$lte': new Date()

@@ -19,6 +19,7 @@ module.exports = (connect) ->
       @options.url ?= "mongodb://localhost/sessions"
       @options.interval ?= 60000
       @options.sweeper ?= true
+      @sweeps = 0
 
       if @options.connection
         connection = @options.connection
@@ -35,6 +36,7 @@ module.exports = (connect) ->
 
       if @options.sweeper is true
         setInterval =>
+          @sweeps++
           @model.remove
             expires:
               '$lte': new Date()
