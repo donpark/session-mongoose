@@ -15,8 +15,11 @@
     "prepublish": "coffee -c *.coffee",
     "test": "mocha"
   },
-  "peerDependencies": {
+  "dependencies": {
     "mongoose": ">= 3.0"
+  },
+  "peerDependencies": {
+    "connect": ">= 2.0"
   },
   "devDependencies": {
     "mocha": "*"
