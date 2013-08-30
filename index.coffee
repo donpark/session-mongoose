@@ -19,6 +19,7 @@ module.exports = (connect) ->
       @options.url ?= "mongodb://localhost/sessions"
       @options.interval ?= 60000
       @options.sweeper ?= true
+      @options.modelName ?= "Session"
       @sweeps = 0
 
       if @options.connection
@@ -30,9 +31,9 @@ module.exports = (connect) ->
           connection = mongoose.connection
 
       try
-        @model = connection.model('Session')
+        @model = connection.model(@options.modelName)
       catch err
-        @model = connection.model('Session', SessionSchema)
+        @model = connection.model(@options.modelName, SessionSchema)
 
       if @options.sweeper is true
         setInterval =>

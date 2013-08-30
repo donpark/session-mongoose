@@ -46,7 +46,7 @@
       __extends(SessionStore, _super);
 
       function SessionStore(options) {
-        var connection, err, _base, _base1, _base2,
+        var connection, err, _base, _base1, _base2, _base3,
           _this = this;
         this.options = options != null ? options : {};
         if ((_base = this.options).url == null) {
@@ -57,6 +57,9 @@
         }
         if ((_base2 = this.options).sweeper == null) {
           _base2.sweeper = true;
+        }
+        if ((_base3 = this.options).modelName == null) {
+          _base3.modelName = "Session";
         }
         this.sweeps = 0;
         if (this.options.connection) {
@@ -69,10 +72,10 @@
           }
         }
         try {
-          this.model = connection.model('Session');
+          this.model = connection.model(this.options.modelName);
         } catch (_error) {
           err = _error;
-          this.model = connection.model('Session', SessionSchema);
+          this.model = connection.model(this.options.modelName, SessionSchema);
         }
         if (this.options.sweeper === true) {
           setInterval(function() {
