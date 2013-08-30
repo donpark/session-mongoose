@@ -89,7 +89,6 @@ Setting `modelName` option will override default session model name (`Session`).
 
 MongoDB version 2.2+ has built-in TTL (time-to-live) support.
 
-TTL support is disabled by default. Enabling it will disable the *sweeper*.
 To enable TTL-support, set `ttl` option to session TTL in **seconds**.
 
     var store = new SessionStore({
@@ -97,8 +96,10 @@ To enable TTL-support, set `ttl` option to session TTL in **seconds**.
         ttl: 3600 // session expires in 60 minutes
     });
 
-**WARNING 1**: This feature hasn't been tested yet.
-**WARNING 2**: TTL-support uses a slightly different schema so you may run into migration issues.
+As expected, the sweeper will be disabled when TTL support is used.
+
+* **WARNING 1**: This feature hasn't been tested yet.
+* **WARNING 2**: TTL-support uses a slightly different schema so you may run into migration issues.
 
 ## Also See
 
