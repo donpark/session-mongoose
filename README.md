@@ -77,6 +77,29 @@ setting the sweeper option to false. It is true by default.
         connection: mongoose.connection // <== custom connection
     });
 
+## Custom Session Model Name
+
+Setting `modelName` option will override default session model name (`Session`).
+
+    var store = new SessionStore({
+        modelName: "Foobar" // collection name will be "foobars"
+    });
+
+## Experimental TTL support
+
+MongoDB version 2.2+ has built-in TTL (time-to-live) support.
+
+TTL support is disabled by default. Enabling it will disable the *sweeper*.
+To enable TTL-support, set `ttl` option to session TTL in **seconds**.
+
+    var store = new SessionStore({
+        connection: mongoose.connection, // <== custom connection
+        ttl: 3600 // session expires in 60 minutes
+    });
+
+**WARNING 1**: This feature hasn't been tested yet.
+**WARNING 2**: TTL-support uses a slightly different schema so you may run into migration issues.
+
 ## Also See
 
 ### Similar Projects
