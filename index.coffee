@@ -57,7 +57,7 @@ module.exports = (connect) ->
       if @options.ttl > 0
         query = { sid: sid }
       else
-        query = { sid: sid, expires: {'$gte': new Date()} }
+        query = { sid: sid, $or: [ { expires: { '$gte': new Date() } }, { expires: null } ] }
       @model.findOne query, (err, session) ->
         if err or not session
           cb err

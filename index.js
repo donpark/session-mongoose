@@ -118,9 +118,15 @@
         } else {
           query = {
             sid: sid,
-            expires: {
-              '$gte': new Date()
-            }
+            $or: [
+              {
+                expires: {
+                  '$gte': new Date()
+                }
+              }, {
+                expires: null
+              }
+            ]
           };
         }
         return this.model.findOne(query, function(err, session) {
