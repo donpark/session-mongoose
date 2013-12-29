@@ -99,7 +99,7 @@ module.exports = (connect) ->
 
     all: (cb = defaultCallback) ->
       select = if @options.ttl > 0 then 'sid' else 'sid expires'
-      @model.find {}, select, (err, sessions) ->
+      @model.find {}, select, (err, sessions) =>
         if err or not sessions
           cb err
         else if @options.ttl > 0

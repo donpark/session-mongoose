@@ -202,7 +202,8 @@
       };
 
       SessionStore.prototype.all = function(cb) {
-        var select;
+        var select,
+          _this = this;
         if (cb == null) {
           cb = defaultCallback;
         }
@@ -211,7 +212,7 @@
           var now, session;
           if (err || !sessions) {
             return cb(err);
-          } else if (this.options.ttl > 0) {
+          } else if (_this.options.ttl > 0) {
             return cb(null, (function() {
               var _i, _len, _results;
               _results = [];
