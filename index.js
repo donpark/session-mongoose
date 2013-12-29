@@ -211,7 +211,7 @@
           var now, session;
           if (err || !sessions) {
             return cb(err);
-          } else if (this.options.ttl > 0) {
+          } else if (select === 'sid') {
             return cb(null, (function() {
               var _i, _len, _results;
               _results = [];
