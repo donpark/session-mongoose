@@ -113,6 +113,11 @@ TBD
 
 ## Migration Notes
 
+### Version 0.5 Migration Note
+
+Version 0.5 uses connection-specific `Schema` object if connection was passed in via `options`
+to protect against Mongoose version conflicts as suggested by @bra1n.
+
 ### Version 0.2 Migration Note
 
 * an instance of `connect` module (or equivalent like `express`) is now **required** to get
