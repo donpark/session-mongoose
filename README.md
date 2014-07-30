@@ -116,7 +116,7 @@ TBD
 ### Version 0.5 Migration Note
 
 Version 0.5 uses connection-specific `Schema` object if connection was passed in via `options`
-to protect against Mongoose version conflicts as suggested by @bra1n.
+to protect against Mongoose version conflicts as suggested by [@bra1n](https://github.com/bra1n).
 
 ### Version 0.2 Migration Note
 
