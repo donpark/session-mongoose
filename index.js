@@ -42,7 +42,9 @@
         this.sweeps = 0;
         if (this.options.connection) {
           connection = this.options.connection;
-          Schema = connection.schema;
+          if (connection.Schema) {
+            Schema = connection.Schema;
+          }
         } else {
           if (mongoose.connection.readyState === 0) {
             connection = mongoose.connect(this.options.url);

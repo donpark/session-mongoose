@@ -17,7 +17,7 @@ module.exports = (connect) ->
 
       if @options.connection
         connection = @options.connection
-        Schema = connection.schema # avoid mongoose version conflict
+        Schema = connection.Schema if connection.Schema # avoid mongoose version conflict
       else
         if mongoose.connection.readyState is 0
           connection = mongoose.connect @options.url
