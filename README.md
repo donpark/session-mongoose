@@ -5,8 +5,7 @@
 **IMPORTANT**: This module currently supports legacy versions of `connect` (2.x) and
 `express` (2.x and 3.x) due to extensive changes made to those modules.
 
-Until support for latest modules are added, this module should not be used with latest
-versions of `connect` and `express`.
+This module should not be used with latest versions of `connect` and `express`.
 
 --
 
